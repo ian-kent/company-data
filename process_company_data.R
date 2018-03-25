@@ -15,8 +15,13 @@ companies_region$IncorporationDate <- as.Date(companies_region$IncorporationDate
 # years <- data.frame(addmargins(table(year(companies_region$IncorporationDate), companies_region$`UK region`)))
 years <- data.frame(table(year(companies_region$IncorporationDate), companies_region$`UK region`))
 years_data <- data.frame(acast(years, Var1~Var2, value.var="Freq"))
+years_data_2 <- years_data
+years_data_2$England <- years_data_2$East.Midlands + years_data_2$Greater.London + years_data_2$North.East + years_data_2$North.West + years_data_2$South.East + years_data_2$South.West + years_data_2$West.Midlands
+years_data_2$Other <- years_data_2$Channel.Islands + years_data_2$Isle.of.Man + years_data_2$Non.geographic
+years_data_2 <- subset(years_data_2, select = -c(East.Midlands, Greater.London, North.East, North.West, South.East, South.West, West.Midlands, Channel.Islands, Isle.of.Man, Non.geographic) )
+
 # write.csv(years, file = "/Users/iankent/dev/src/github.com/ian-kent/company-data/incorporations_per_region_by_year.csv")
-write.csv(years_data, file = "/Users/iankent/dev/src/github.com/ian-kent/company-data/incorporations_per_region_by_year.csv")
+write.csv(years_data_2, file = "/Users/iankent/dev/src/github.com/ian-kent/company-data/incorporations_per_region_by_year.csv")
 
 # by year: top 10 popular name words
 
