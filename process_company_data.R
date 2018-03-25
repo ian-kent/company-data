@@ -1,4 +1,5 @@
 library(readr)
+library(reshape2)
 library("lubridate", lib.loc="/usr/local/lib/R/3.4/site-library")
 library("dplyr", lib.loc="/usr/local/lib/R/3.4/site-library")
 
@@ -13,7 +14,9 @@ companies_region$IncorporationDate <- as.Date(companies_region$IncorporationDate
 # by year: incorporated count by region
 # years <- data.frame(addmargins(table(year(companies_region$IncorporationDate), companies_region$`UK region`)))
 years <- data.frame(table(year(companies_region$IncorporationDate), companies_region$`UK region`))
-write.csv(years, file = "/Users/iankent/dev/src/github.com/ian-kent/company-data/incorporations_per_region_by_year.csv")
+years_data <- data.frame(acast(years, Var1~Var2, value.var="Freq"))
+# write.csv(years, file = "/Users/iankent/dev/src/github.com/ian-kent/company-data/incorporations_per_region_by_year.csv")
+write.csv(years_data, file = "/Users/iankent/dev/src/github.com/ian-kent/company-data/incorporations_per_region_by_year.csv")
 
 # by year: top 10 popular name words
 
